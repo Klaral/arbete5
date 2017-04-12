@@ -1,0 +1,18 @@
+* {
+	font-size: 20px;
+}
+
+.myform {
+	border: none;
+}
+
+#kna1:focus{
+    background-color: aquamarine;
+    
+}
+
+#kna2:focus{
+    background-color: aquamarine;
+   
+}
+
