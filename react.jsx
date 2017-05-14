@@ -1,4 +1,4 @@
-/****1/5****/
+/****1/5***/
 
 class App extends React.Component {
 	constructor(props) {
@@ -25,8 +25,10 @@ class App extends React.Component {
 }
 
 function MyForm(props) {
-	return <div>
-    	<input type="text" onKeyUp={props.handleKeyUp} /> <br/>
+    return <div>
+    	<input type="text" 
+               placeholder="Text" 
+               onKeyUp={props.handleKeyUp} /> <br/>
     	<span>{props.msg}</span>
     </div>;
 }
@@ -38,107 +40,127 @@ ReactDOM.render(
 
 
 
-/****2/5****/
+/****2/5***/
 
 class Sum extends React.Component {
-	render() {
-        var a = Number(nr1.value) + Number (nr2.value)
-		return (
-		  <div>{a}</div>
-			);
-	}
-}
-
-var nr1 = document.getElementById("nr1");
-var nr2 = document.getElementById("nr2");
-
-function plus(event){
-    ReactDOM.render(
-  <Sum summa = {nr1 + nr2} />,
-  document.getElementById('summa')
-)
-summa.value = "";
     
+    constructor(props) {
+        super(props);
+        this.state = {
+           nr1:"",
+           nr2:""
+        };
+        this.input1 = this.input1.bind(this)
+        this.input2 = this.input2.bind(this)
+    }
+    
+    input1 (event) {
+        var number1 = event.target.value;
+        this.setState({nr1: number1});
+    }
+    
+    input2 (event) {
+        var number2 = event.target.value;
+        this.setState({nr2: number2});
+    }
+    
+    calculator () {
+        return Number(this.state.nr1) + Number(this.state.nr2); 
+    };
+    
+    render () {
+        return (
+            
+            <div>
+                    <input 
+                        type="text" 
+                        placeholder="Skriv en siffra"
+                        onChange={this.input1}
+                     />
+                 
+                <div> + </div>
+                
+                    <input 
+                        type="text" 
+                        placeholder="Skriv en siffra"
+                        onChange={this.input2}
+                     />
+                
+                <div> = </div>
+                <div>
+                        {this.calculator()}
+                </div>
+            </div>
+        );
+    }
 }
-
-nr1.addEventListener("keyup", plus);
-nr2.addEventListener("keyup", plus);
+ReactDOM.render (
+        <Sum />,
+        document.getElementById('summa')
+        );
 
 
 
 /****3/5****/
 
 class Btn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: ""
-    };
-    this.btn1Value = this.btn1Value.bind(this);
-    this.btn2Value = this.btn2Value.bind(this);
-  }
-   btn1Value(event){
-    this.setState({value:this.state.value = "första knappen"})
     
-  }  
-  btn2Value(event){
-    this.setState({value: this.state.value = "andra knappen"})
-    
-  }
-    
-    
-  render() {
-    return (
-    
-      <div>
-            <button id="kna1" onClick={this.btn1Value}>Första knappen</button>
-            <button id="kna2" onClick={this.btn2Value}>Andra knappen</button>
-        <span>Du tryckte på: {this.state.value}</span>
-      
-      </div>
-     
-    )
-  }
-}
-ReactDOM.render(
-    <Btn></Btn>,
-  document.getElementById('knappar')
-);
-
-
-
-
-
-
-
-
-
-/**input ist för html**/
-
-/*** class App extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            text:this.props.initial
+              value1: "",
+              value2: "" 
+             
         };
-         this.handleChange = this.handleChange.bind(this);
-    }
-    handelChange(event){
-        //consloe.log('handelChange')
-        this.setState({
-            text: event.target.value
-        }) 
+        
+        this.btn1Value = this.btn1Value.bind(this)
+        this.btn2Value = this.btn2Value.bind(this)
     }
     
-render(){  
-    return(<p>
-  <input type="text" 
-            value={this.state.text}
-         onChange={this.handleChange} />  
-      </p>)
+    btn1Value (event) {
+        this.setState({textDisplay: event.target.innerHTML});
+        this.setState({value1: event.target.value});
+        
+       
 
     }
-    } ***/
-    
+    btn2Value (event) {
+        this.setState({textDisplay: event.target.innerHTML});
+        this.setState({value2: event.target.value});
+        
+
+    }
+   
+    render () {
+        
+        return (
+            <div>
+                    <button id="kna1" onClick={this.btn1Value}>
+                        Första knappen
+                    </button>    
+                
+                
+                    <button id="kna2" onClick={this.btn2Value}>
+                        Andra knappen
+                    </button> 
+                 
+            <div id="knappar"> Du tryckte på:
+                    {this.state.textDisplay}
+                    <span style={{display: this.state.spanDisplay1}}>
+                         {this.state.value1}
+                    </span>
+                    <span style={{display: this.state.spanDisplay2}}>
+                        {this.state.value2}
+                    </span>
+            </div>
+            </div>        
+        );
+    }
+}
+ ReactDOM.render (
+        <Btn />,
+        document.getElementById('knappar')
+        );
+
 
 
